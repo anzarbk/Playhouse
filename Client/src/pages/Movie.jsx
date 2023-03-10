@@ -1,20 +1,16 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
-import Banner from '../components/Banner';
+import MovieDetails from '../components/MovieDetails';
 
-const MusicConcerts = () => {
+const Movie = () => {
   return (
     <div>
       <div>
         <Navbar />
-        <Banner />
       </div>
       <div>
-        <TopMusicConcerts />
-        <TopMusicConcerts />
-        <TopMusicConcerts />
-        <TopMusicConcerts />
+        <MovieDetails />
       </div>
       <div>
         <Footer />
@@ -23,4 +19,4 @@ const MusicConcerts = () => {
   );
 };
 
-export default MusicConcerts;
+export default Movie;

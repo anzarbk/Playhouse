@@ -2,10 +2,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
 const cors = require("cors");
-const userRoutes = require("./routes/userRoutes");
+const commonRoutes = require("./routes/commonRoutes");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const mongoose = require('./database')
+const mongoose = require("./database");
 const conn = require("./database");
 
 const app = express();
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", userRoutes);
+app.use("/", commonRoutes);
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.listen(process.env.PORT, () => {

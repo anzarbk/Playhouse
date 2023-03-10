@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import axios from '../axios/server';
+// import axios from '../axios/server';
 import { useForm } from 'react-hook-form';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { firebaseAuth } from '../config/firebase';
+import { firebaseAuth } from '../utils/firebase';
+import { useDispatch } from 'react-redux';
+import { userDataActions } from '../redux/userSlice';
+import { tokenActions } from '../redux/tokenSlice';
+import { authActions } from '../redux/authSlice';
+import { roleDataActions } from '../redux/roleSlice';
+import { googleAPI, signinAPI } from '../api/auth';
 
 const Login = ({ setCurrentPage, handleClose }) => {
   //use form hook;
@@ -14,20 +20,24 @@ const Login = ({ setCurrentPage, handleClose }) => {
 
   //useState for error validation;
   const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useDispatch();
 
   const atSubmit = async (input) => {
-    console.log(input);
+    console.log(input, 'input');
     try {
       const { email, password } = input;
       const userCred = await signInWithEmailAndPassword(firebaseAuth, email, password);
       const { user } = userCred;
       const toServer = { email, password, accessToken: await user.getIdToken() };
-      const { data } = await axios.post('auth/login', toServer);
-      if (data?.status === 'success') {
-        handleClose();
-      }
+      const data = await signinAPI(toServer);
+      // Set User data on redux, localstorage
+      dispatch(userDataActions.setUser(data?.user));
+      dispatch(tokenActions.setToken(data?.token));
+      dispatch(authActions.login());
+      dispatch(roleDataActions.setRole(data?.user?.role));
+      handleClose();
     } catch (error) {
-      setErrorMessage('Please provide valid input !');
+      setErrorMessage(error?.message || 'Something went wrong !');
       return;
     }
     setErrorMessage('Somrthing went wrong !');
@@ -45,14 +55,17 @@ const Login = ({ setCurrentPage, handleClose }) => {
         image: user.photoURL,
         accessToken: await user.getIdToken(),
       };
-      const { data } = await axios.post('auth/googleSignup', toServer);
-      if (data?.status === 'success') {
-        //  Set User data on redux, localstorage
-        //  show notification
-        // close modal
-        handleClose();
-      }
+      const data = await googleAPI(toServer);
+      //  Set User data on redux, localstorage
+      dispatch(userDataActions.setUser(data?.user));
+      dispatch(tokenActions.setToken(data?.token));
+      dispatch(authActions.login());
+      dispatch(roleDataActions.setRole(data?.user?.role));
+      //  show notification
+      // close modal
+      handleClose();
     } catch (error) {
+      setErrorMessage(error?.message || 'Something went wrong !');
       console.log(error);
     }
   };

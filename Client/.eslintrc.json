@@ -17,16 +17,5 @@
         "react"
     ],
     "rules": {
-    "max-len": [1, { "code": 200 }],
-    "prettier/prettier": "warn",
-    "no-unused-vars": "warn",
-    "no-console": "off",
-    "func-names": "off",
-    "no-plusplus": "off",
-    "no-process-exit": "off",
-    "class-methods-use-this": "off",
-    "consistent-return":"off",
-    "no-param-reassign":"off",
-    "no-underscore-dangle":"off"
     }
 }

@@ -2,10 +2,9 @@ import React from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import Banner from '../components/Banner';
-import TopMovies from '../components/TopMovies';
-import TopTalkShows from '../components/TopTalkShows';
-import TopMusicConcerts from '../components/TopMusicConcerts';
-
+// import TopMovies from '../components/TopMovies';
+// import TopTalkShows from '../components/hallDetails';
+// import TopMusicConcerts from '../components/concertDetails';
 
 function home() {
   return (
@@ -16,9 +15,9 @@ function home() {
           <Banner />
         </div>
         <div className="grid justify-center p-4 mt-5">
-          <TopMovies />
+          {/* <TopMovies />
           <TopTalkShows />
-          <TopMusicConcerts />
+          <TopMusicConcerts /> */}
         </div>
       </div>
       <div>

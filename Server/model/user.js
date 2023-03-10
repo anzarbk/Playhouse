@@ -20,9 +20,10 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
+      unique: true,
     },
-    birthday: {
-      type: Date,
+    age: {
+      type: String,
     },
     areaPinCode: {
       type: String,
@@ -44,6 +45,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+      default: "user",
+      enum: ["user", "theatre", "hall", "concert", "admin"],
     },
     isBlocked: {
       type: Boolean,

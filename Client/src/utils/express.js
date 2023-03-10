@@ -1,7 +1,7 @@
 import axios from 'axios';
 import baseURL from '../api/baseUrl';
 
-const instance = axios.create({
+const express = axios.create({
   baseURL: baseURL,
 });
-export default instance;
+export default express;

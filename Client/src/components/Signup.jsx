@@ -3,19 +3,15 @@
 
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from '../axios/server';
-import {
-  // RecaptchaVerifier,
-  signInWithPopup,
-  // signInWithPhoneNumber,
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-} from 'firebase/auth';
-import { firebaseAuth } from '../config/firebase';
+import { signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '../utils/firebase';
 import { FirebaseError } from 'firebase/app';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../redux/userSlice';
-import tokenDataActions from '../redux/tokenSlice';
+import { userDataActions } from '../redux/userSlice';
+import { tokenActions } from '../redux/tokenSlice';
+import { authActions } from '../redux/authSlice';
+import { roleDataActions } from '../redux/roleSlice';
+import { googleAPI, signUpAPI } from '../api/auth';
 const Signup = ({ setCurrentPage, handleClose }) => {
   //use form hook;
   const {
@@ -48,27 +44,16 @@ const Signup = ({ setCurrentPage, handleClose }) => {
       const userCred = await createUserWithEmailAndPassword(firebaseAuth, email, password);
       const { user } = userCred;
       const toServer = { email, password, name, accessToken: await user.getIdToken() };
-      const { data } = await axios.post('auth/signup', toServer);
-      if (data?.status === 'success') {
-        console.log(data);
-        // Set User data on redux, localstorage
-        dispatch(
-          setUser({
-            name: data.name,
-            email: data.email,
-            loggedIn: true,
-          })
-        );
-        // dispatch(
-        //   tokenDataActions.setToken({
-        //     token: data.token,
-        //     status: true,
-        //   })
-        // );
-      }
-      //show notification
+      const data = await signUpAPI(toServer);
+      // Set User data on redux, localstorage
+      dispatch(userDataActions.setUser(data?.user));
+      dispatch(tokenActions.setToken(data?.token));
+      dispatch(authActions.login());
+      dispatch(roleDataActions.setRole(data?.user?.role));
       //close modal
       handleClose();
+
+      //show notification
     } catch (err) {
       console.log(err);
       if (err instanceof FirebaseError) {
@@ -103,13 +88,15 @@ const Signup = ({ setCurrentPage, handleClose }) => {
         image: user.photoURL,
         accessToken: await user.getIdToken(),
       };
-      const { data } = await axios.post('auth/googleSignup', toServer);
-      if (data?.status === 'success') {
-        //  Set User data on redux, localstorage
-        //  show notification
-        // close modal
-        handleClose();
-      }
+      const data = await googleAPI(toServer);
+      //  Set User data on redux, localstorage
+      dispatch(userDataActions.setUser(data?.user));
+      dispatch(tokenActions.setToken(data?.token));
+      // dispatch(authActions.login());
+      dispatch(roleDataActions.setRole(data?.user?.role));
+      //  show notification
+      // close modal
+      handleClose();
     } catch (error) {
       console.log(error);
     }
@@ -210,7 +197,14 @@ const Signup = ({ setCurrentPage, handleClose }) => {
                 },
               })}
             />
-            {errors?.name && <span className="text-sm text-[#ff0000]">{errors.name.message}</span>}
+            {errors?.name && (
+              <span
+                className="text-sm text-[#ff0000]
+            "
+              >
+                {errors.name.message}
+              </span>
+            )}
           </div>
           <div className="mt-6  w-full">
             <label className="text-sm font-medium leading-none text-gray-800">Email</label>

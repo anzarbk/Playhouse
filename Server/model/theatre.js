@@ -13,9 +13,9 @@ const theatreSchema = new mongoose.Schema({
   facilities: {
     type: Array,
   },
-  screen: {
-    type: Array,
-  },
+  // screen: {
+  //   type: Array,
+  // },
   image: {
     type: Array,
   },
