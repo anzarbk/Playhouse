@@ -103,12 +103,12 @@ exports.googleSignup = async (req, res, next) => {
 
 exports.checkIsAuth = async (req, res, next) => {
   try {
+    console.log("ansu");
     // Extract token
     const token = extractToken(req);
     if (!token) {
       return res.json({ status: "failed", message: "Token not found !" });
     }
-    console.log("dasdaasdasdads");
 
     // Verify token
     const verified = await FB.verifyToken(token);
@@ -121,7 +121,6 @@ exports.checkIsAuth = async (req, res, next) => {
     const user = await User.findOne({ email: verified.email });
     // append user data on req as req.user
     req.user = user;
-    console.log("dasdas");
     next();
   } catch (err) {
     console.log(err);

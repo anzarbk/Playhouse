@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -16,3 +16,17 @@ const storage = getStorage(app);
 export const firebaseAuth = getAuth(app);
 
 export { app, storage };
+
+export const uploadImage = async (file, bucket) => {
+  try {
+    const filename = new Date().getTime() + file.name;
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `${bucket}/${filename}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    await uploadTask;
+    let photoUrl = await getDownloadURL(uploadTask.snapshot.ref);
+    return photoUrl;
+  } catch (err) {
+    throw err;
+  }
+};

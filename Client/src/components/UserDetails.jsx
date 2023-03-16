@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../utils/express';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStates, getCities } from '../utils/locationFinder'; //import function for getting states ans cities from locationFinder.js
 import { isEmail, lengthChecker, numChecker } from '../utils/validators'; //import function for validation for string and email from validator.js
@@ -184,7 +183,7 @@ const UserDetails = () => {
   const currentUserToken = useSelector((state) => state?.token?.data);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const dataV = verifyData();
+    const dataV = verifyData(); //#####################???????????????????????
     if (!dataV || !currentUserToken) return;
     console.log(dataV);
     console.log(currentUserToken);
@@ -326,7 +325,7 @@ const UserDetails = () => {
                           <span className="text-[12px] font-extralight  ">*must select this field</span>
                         </label>
 
-                        <select id="country" disabled={states?.length === 0} onChange={changeState} name="country" autoComplete="country-name" className="mt-2 px-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <select id="country" disabled={states?.length === 0} onChange={changeState} name="country" autoComplete="country-name" className="mt-2  block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                           {states?.length === 0 && <option value={''}>{'Could not load state data !'}</option>}
                           {states?.length > 0 &&
                             states.map((st) => {

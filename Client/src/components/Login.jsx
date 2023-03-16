@@ -35,6 +35,7 @@ const Login = ({ setCurrentPage, handleClose }) => {
       dispatch(tokenActions.setToken(data?.token));
       dispatch(authActions.login());
       dispatch(roleDataActions.setRole(data?.user?.role));
+
       handleClose();
     } catch (error) {
       setErrorMessage(error?.message || 'Something went wrong !');

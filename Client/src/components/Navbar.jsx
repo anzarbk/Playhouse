@@ -5,6 +5,7 @@ import Logo from '../ui/common/Logo';
 import Search from '../ui/common/Search';
 import Location from '../ui/common/Location';
 import Account from '../ui/common/Account';
+import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
 
@@ -20,7 +21,10 @@ const Navbar = () => {
       }}
     >
       <div className="flex justify-between w-full px-4 bg-[#C91B1B] absolute h-7">
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
+
         <Search />
         <Stack direction="row">
           <Location sx={{ fontSize: 'small' }} />

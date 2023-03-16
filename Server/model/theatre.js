@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const theatreSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -9,18 +9,23 @@ const theatreSchema = new mongoose.Schema({
   user: {
     type: mongoose.Types.ObjectId,
     ref: "user",
+    unique: true,
+    index: true,
   },
   facilities: {
-    type: Array,
+    type: String,
+  },
+  about: {
+    type: String,
   },
   // screen: {
   //   type: Array,
   // },
   image: {
-    type: Array,
+    type: String,
   },
   banner: {
-    type: Array,
+    type: String,
   },
   show: {
     type: [
@@ -40,29 +45,17 @@ const theatreSchema = new mongoose.Schema({
       },
     ],
   },
+  pincode: {
+    type: String,
+  },
   address: {
-    type: [
-      {
-        pincode: {
-          type: String,
-        },
-        address1: {
-          type: String,
-        },
-        address2: {
-          type: String,
-        },
-        landmark: {
-          type: String,
-        },
-        town: {
-          type: String,
-        },
-        state: {
-          type: String,
-        },
-      },
-    ],
+    type: String,
+  },
+  town: {
+    type: String,
+  },
+  state: {
+    type: String,
   },
 });
 module.exports = mongoose.model("theatre", theatreSchema);

@@ -86,7 +86,6 @@ exports.editProfileImage = async (req, res) => {
       { image },
       { new: true, runValidators: true }
     );
-    console.log(user);
     res.json({
       status: "success",
       user,

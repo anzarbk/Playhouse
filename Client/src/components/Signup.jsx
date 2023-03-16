@@ -12,6 +12,7 @@ import { tokenActions } from '../redux/tokenSlice';
 import { authActions } from '../redux/authSlice';
 import { roleDataActions } from '../redux/roleSlice';
 import { googleAPI, signUpAPI } from '../api/auth';
+import { theatreDataActions } from '../redux/theatreSlice';
 const Signup = ({ setCurrentPage, handleClose }) => {
   //use form hook;
   const {
