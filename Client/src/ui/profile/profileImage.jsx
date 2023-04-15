@@ -4,7 +4,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { Progress } from './progress';
 import { useDispatch, useSelector } from 'react-redux';
-import { profileImageEditAPI } from '../../api/common';
+import { profileImageEditAPI } from '../../APIs/Common';
 import { userDataActions } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import baseURL from '../api/baseUrl';
+import baseURL from '../APIs/BaseUrl';
 
 const express = axios.create({
   baseURL: baseURL,

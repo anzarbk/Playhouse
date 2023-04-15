@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { uploadImage } from '../../utils/firebase';
-
 import { Progress } from '../profile/progress';
-import { theatreImagesEditAPI } from '../../api/theatre';
+import { theatreImagesEditAPI } from '../../APIs/Theatre';
 import { useSelector } from 'react-redux';
 
 const TheatreImage = ({ imageUrl, setImageUrl, bannerUrl, setBannerUrl }) => {
